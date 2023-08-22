@@ -1,0 +1,77 @@
+let cont=0;
+let g= -10;
+let pelota1;
+let pelota2;
+let dt= 1/30;
+
+function setup() {
+  createCanvas(500, 500);
+  frameRate(30)
+  
+  button = createButton('Reiniciar');
+  button.position(10,10);
+  button.mousePressed(reiniciar)
+  
+  pelota1= new Roca(createVector(-100,200),createVector(10,50),30);
+  pelota2= new Roca(createVector(100,200),createVector(0,0),30);
+}
+function reiniciar(){
+  setup();
+}
+
+function draw() {
+  cont += 1;
+  if (cont==200){
+    cont= -200
+  }
+  translate(250,250); //para transladar el origen al centro
+  
+  
+  background(100,200,250);
+  
+  line(-250,0,250,0) // para hacer una línea(x1,y1,x2,y2)
+  
+  line(0,250,0,-250)
+  
+  scale(1,-1) //para hacer que el eje y sea positivo hacía arriba y no hacía abajo.
+  
+  //circle(cont,70,15) //para hacer un circulo (x,y,d)
+  pelota1.update()
+  
+  pelota2.update()
+  
+  pelota1.mostrar()
+  
+  pelota2.mostrar()
+  
+}
+
+let Roca= function(_pos,_vel,_dia){
+  this.pos=_pos;
+  this.vel=_vel;
+  this.dia=_dia;
+  this.path=[];
+  
+  this.mostrar = function(){
+    circle(this.pos.x,this.vel.y,this.dia)
+    for (let i =0; i< this.path.length -2; i++){
+      line(this.path[i].x,this.path[i].y,this.path[i+1].x,this.path[i+1].y)
+    }
+  }
+  
+  this.update =function(){
+    this.vel.y += g*dt;
+    this.pos.x += this.vel.x*dt;
+    this.pos.y += this.vel.y*dt;
+    this.path.push(this.pos.copy());
+      if (this.path.length > 500){
+        this.path.splice(0,1);
+      }
+  }
+  this.verColision = function(Roca){
+    if (abs(this.pos.x - otra.pos.x)<(this.dia)){
+      this.vel.x = -1*this.vel.x
+    }
+    
+  }
+}
