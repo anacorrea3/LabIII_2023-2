@@ -1,0 +1,25 @@
+let cont=0
+
+function setup() {
+  createCanvas(500, 500);
+}
+
+function draw() {
+  cont += 1;
+  if (cont==200){
+    cont= -200
+  }
+  translate(250,250); //para transladar el origen al centro
+  
+  
+  background(100,200,cont);
+  
+  line(-250,0,250,0) // para hacer una línea(x1,y1,x2,y2)
+  
+  line(0,250,0,-250)
+  
+  scale(1,-1) //para hacer que el eje y sea positivo hacía arriba y no hacía abajo.
+  
+  circle(cont,70,15) //para hacer un circulo (x,y,d)
+  
+}
